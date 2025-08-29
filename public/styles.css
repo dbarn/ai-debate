@@ -1,0 +1,271 @@
+/* Dark theme base */
+body {
+  background: #0d0d0d;
+  color: #f0f0f0;
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  padding-bottom: 60px; /* leave space for bottom nav */
+}
+
+.header-row textarea {
+  width: 95%;
+}
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.app__header {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 3px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Header layout styles */
+.header-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: flex-start;
+}
+
+.header-row:last-child {
+  margin-bottom: 0;
+}
+
+.engine-selectors {
+  display: flex;
+  gap: 1rem;
+  flex: 1;
+}
+
+.header-row h1 {
+  margin: 0;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.field {
+  margin-bottom: 0.8rem;
+  flex: 1;
+}
+
+.header-row .field {
+  margin-bottom: 0;
+}
+
+.field.half {
+  flex: 1;
+}
+
+.field label {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+textarea,
+select,
+button {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 3px;
+  border: 1px solid #444;
+  background: #111;
+  color: #f0f0f0;
+}
+
+button {
+  cursor: pointer;
+  background: #222;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #333;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+/* Chat messages */
+.chat {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 3px;
+  padding: 1rem;
+  height: 60vh;
+  max-height: 600px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.msg {
+  margin-bottom: 1rem;
+  max-width: 75%;
+}
+
+.msg__meta {
+  font-size: 0.75rem;
+  margin-bottom: 0.2rem;
+  color: #aaa;
+}
+
+.msg__bubble {
+  background: #222;
+  border-radius: 3px;
+  padding: 0.5rem 0.8rem;
+}
+
+.msg.--left {
+  text-align: left;
+}
+
+.msg.--right {
+  margin-left: auto;
+  text-align: right;
+}
+
+.msg.--right .msg__bubble {
+  background: #333;
+}
+
+/* Fix bottom nav buttons going off screen */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #111;
+  border-top: 1px solid #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  flex-wrap: wrap;      /* allow wrap if too narrow */
+  box-sizing: border-box;
+}
+
+.bottom-nav button {
+  flex: none;
+  min-width: 120px;
+  max-width: 20%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Spinner */
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 3px solid #444;
+  border-top: 3px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 1rem auto;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Modal styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal.hidden {
+  display: none !important;
+}
+
+.modal-content {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80%;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #333;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: #f0f0f0;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-btn:hover {
+  color: #f0f0f0;
+  background: #333;
+  border-radius: 3px;
+}
+
+.modal-body {
+  padding: 1rem;
+}
+
+#customPromptTextarea {
+  width: 97%;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.modal-actions button {
+  width: auto;
+  min-width: 100px;
+}
+
+button.primary {
+  background: #007acc;
+}
+
+button.primary:hover {
+  background: #005a9e;
+}

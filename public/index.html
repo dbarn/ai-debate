@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Debate</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="app">
+  <header class="app__header">
+    <div class="header-row">
+      <h1><img src="logo.png" height="60" /></h1>
+      <div class="engine-selectors">
+        <div class="field half">
+          <label>Engine A</label>
+          <select id="engineA"></select>
+        </div>
+        <div class="field half">
+          <label>Engine B</label>
+          <select id="engineB"></select>
+        </div>
+      </div>
+    </div>
+    <div class="header-row">
+      <div class="field">
+        <label>Starting Topic</label>
+        <textarea id="topic">Give me a few ideas on what mountains to climb near Milan?</textarea>
+      </div>
+      <div class="field">
+        <label>Extra Prompt Modifier</label>
+        <textarea id="extraPrompt">Limit the response length to 90 words, try to answer any question an be creative and innovative</textarea>
+      </div>
+    </div>
+    <div class="actions">
+      <button id="startBtn">Start Debate</button>
+    </div>
+  </header>
+
+  <section id="chat" class="chat">
+    <div id="loadingSpinner" class="spinner hidden"></div>
+  </section>
+</div>
+
+<!-- Fixed bottom nav -->
+<div class="bottom-nav">
+  <button id="proceedBtn" disabled>Proceed</button>
+  <button id="customPromptBtn" disabled>Inject your point of view</button>
+</div>
+
+<!-- Custom Prompt Modal -->
+<div id="customPromptModal" class="modal hidden">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Inject your point of view</h3>
+      <button id="modalCloseBtn" class="close-btn">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label>Your custom prompt:</label>
+        <textarea id="customPromptTextarea" rows="6" placeholder="Write your custom prompt here..."></textarea>
+      </div>
+      <div class="modal-actions">
+        <button id="prefillLastResponseBtn">Prefill Last AI Response</button>
+        <button id="modalProceedBtn" class="primary">Proceed</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<template id="msgTpl">
+  <div class="msg">
+    <div class="msg__meta"><span class="msg__author"></span></div>
+    <div class="msg__bubble"></div>
+  </div>
+</template>
+
+<script src="app.js" type="module"></script>
+</body>
+</html>

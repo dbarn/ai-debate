@@ -1,0 +1,18 @@
+{
+  "name": "ai-debate-webapp",
+  "version": "1.0.0",
+  "description": "Two-AI debate web app with selectable providers and prompt modifiers (dark mode, 3px radius).",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "NODE_ENV=development node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "helmet": "^7.1.0",
+    "node-fetch": "^3.3.2"
+  }
+}
