@@ -1,6 +1,6 @@
 # AI Debate Web App
 
-Dark-mode Node web app where you pick two AI engines (Claude, Gemini, ChatGPT), enter a starting argument, optionally tweak an extra prompt modifier, and watch them debate in a chat-style UI. All radiuses are 3px.
+Dark-mode Node web app where you pick two AI engines (Claude, Gemini, ChatGPT), enter a starting argument, optionally tweak an extra prompt modifier, and watch them debate in a chat-style UI.
 
 ## Quick Start
 
@@ -16,6 +16,35 @@ Dark-mode Node web app where you pick two AI engines (Claude, Gemini, ChatGPT), 
    npm run dev
    # then open http://localhost:3000
    ```
+
+## How to Use
+
+### Basic Debate Flow
+1. Select two AI engines from the dropdowns (Engine A and Engine B)
+2. Enter a starting topic in the "Starting Topic" field
+3. Optionally add an "Extra Prompt Modifier" to influence AI responses
+4. Click **Start Debate** to begin - the first AI will respond immediately
+5. Click **Proceed** to advance the debate turn by turn
+
+### Custom Prompt Injection
+You can inject your own custom prompts into the conversation at any time:
+
+1. **Start a debate** first using the normal flow
+2. Click **"Inject your point of view"** button in the bottom navigation
+3. In the modal that opens:
+   - Write your custom prompt in the text area
+   - **Optional**: Click "Prefill Last AI Response" to start with the previous AI's message and edit it
+   - Click **Proceed** to inject your prompt and continue the debate
+4. Your custom prompt appears as a "User" message in the chat
+5. The next AI in the sequence will respond to your injected prompt
+6. The debate continues normally from there
+
+**Use Cases for Custom Prompts:**
+- Steer the conversation in a new direction
+- Ask clarifying questions to the AIs
+- Challenge specific points made in the debate
+- Introduce new perspectives or information
+- Edit and reuse previous AI responses as your own input
 
 ## Notes
 - The app advances one turn at a time when you press **Proceed**. You can edit the Extra Prompt at any time and it will affect the next AI turn.
