@@ -48,6 +48,5 @@ You can inject your own custom prompts into the conversation at any time:
 
 ## Notes
 - The app advances one turn at a time when you press **Proceed**. You can edit the Extra Prompt at any time and it will affect the next AI turn.
-- **Restart Debate** clears the chat but keeps your selected engines, topic, and extra prompt so you can start again quickly.
 - The server proxies calls to provider APIs — keep your keys in `.env` and never commit them to source control.
 - For production, add auth, rate-limiting, and proper error handling.
