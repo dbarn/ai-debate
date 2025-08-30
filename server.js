@@ -3,6 +3,8 @@ import cors from 'cors';
 import helmet from 'helmet';
 import fetch from 'node-fetch';
 import dotenv from 'dotenv';
+import fs from 'fs';
+import path from 'path';
 
 dotenv.config();
 
@@ -20,6 +22,26 @@ const PROVIDERS = {
     openai: {label: 'ChatGPT (OpenAI gpt-4o-mini)',model: 'gpt-4o-mini'},
 };
 
+function logPrompt(providerKey, prompt) {
+    const timestamp = new Date().toISOString();
+    const logEntry = {
+        timestamp,
+        provider: providerKey,
+        model: PROVIDERS[providerKey].model,
+        prompt
+    };
+    
+    const logDir = path.join(process.cwd(), 'logs');
+    if (!fs.existsSync(logDir)) {
+        fs.mkdirSync(logDir, { recursive: true });
+    }
+    
+    const logFile = path.join(logDir, `ai-prompts-${new Date().toISOString().split('T')[0]}.jsonl`);
+    const logLine = JSON.stringify(logEntry) + '\n';
+    
+    fs.appendFileSync(logFile, logLine, 'utf8');
+}
+
 function buildUnifiedPrompt({topic, history, speakerName, extraPrompt}) {
     const transcript = history?.map((m, i) => `${i + 1}. ${m.speaker}: ${m.text}`).join('\n') || '';
     const guidance = extraPrompt?.trim() ? `\nAdditional instructions: ${extraPrompt.trim()}` : '';
@@ -32,6 +54,8 @@ function buildUnifiedPrompt({topic, history, speakerName, extraPrompt}) {
 }
 
 async function callProvider({providerKey, prompt}) {
+    logPrompt(providerKey, prompt);
+    
     if (providerKey === 'openai') {
         const apiKey = process.env.OPENAI_API_KEY;
         if (!apiKey) throw new Error('Missing OPENAI_API_KEY');
