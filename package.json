@@ -5,8 +5,8 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node server.js",
-    "dev": "NODE_ENV=development node server.js"
+    "start": "open-cli http://localhost:3000",
+    "dev": "node server.js & open-cli http://localhost:3000"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -14,5 +14,8 @@
     "express": "^4.19.2",
     "helmet": "^7.1.0",
     "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "open-cli": "^8.0.0"
   }
 }
