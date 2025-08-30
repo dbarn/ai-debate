@@ -251,6 +251,90 @@ function initializeModal() {
   }
 }
 
+// Voice recognition functionality
+let recognition;
+let isListening = false;
+
+function initVoiceRecognition() {
+  if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = navigator.language;
+    
+    recognition.onresult = function(event) {
+      const transcript = event.results[0][0].transcript;
+      const targetId = recognition.targetId;
+      const textarea = document.getElementById(targetId);
+      if (textarea) {
+        let str = transcript;
+        let modStr = str[0].toUpperCase() + str.slice(1);
+        textarea.value = modStr;
+      }
+      stopListening();
+    };
+    
+    recognition.onerror = function(event) {
+      console.error('Speech recognition error:', event.error);
+      stopListening();
+    };
+    
+    recognition.onend = function() {
+      stopListening();
+    };
+  }
+}
+
+function startListening(targetId) {
+  if (!recognition) {
+    alert('Voice recognition not supported in this browser');
+    return;
+  }
+  
+  if (isListening) {
+    stopListening();
+    return;
+  }
+  
+  recognition.targetId = targetId;
+  recognition.start();
+  isListening = true;
+  
+  // Update button appearance
+  const btn = document.querySelector(`[data-target="${targetId}"]`);
+  if (btn) {
+    btn.textContent = '🔴';
+    btn.classList.add('listening');
+  }
+}
+
+function stopListening() {
+  if (recognition && isListening) {
+    recognition.stop();
+  }
+  isListening = false;
+  
+  // Reset all voice buttons
+  document.querySelectorAll('.voice-btn').forEach(btn => {
+    btn.textContent = '🎤';
+    btn.classList.remove('listening');
+  });
+}
+
+
+// Add event listeners for voice buttons
+document.addEventListener('DOMContentLoaded', function() {
+  initVoiceRecognition();
+  
+  document.querySelectorAll('.voice-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const targetId = this.getAttribute('data-target');
+      startListening(targetId);
+    });
+  });
+});
+
 // Initialize everything
 initializeModal();
 loadProviders();
