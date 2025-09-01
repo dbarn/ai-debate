@@ -3,6 +3,26 @@ let currentTurn = 0;
 let history = [];
 let engines = {};
 
+function markdownToHtml(markdown) {
+  return markdown
+    // Headers
+    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+    .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+    // Bold
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    // Italic
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    // Code blocks
+    .replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
+    // Inline code
+    .replace(/`(.*?)`/g, '<code>$1</code>')
+    // Links
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
+    // Line breaks
+    .replace(/\n/g, '<br>');
+}
+
 const engineASelect = document.getElementById('engineA');
 const engineBSelect = document.getElementById('engineB');
 const topicTextarea = document.getElementById('topic');
@@ -39,7 +59,7 @@ function renderHistory() {
     const node = tpl.content.firstElementChild.cloneNode(true);
     node.classList.add(idx % 2 === 0 ? '--left' : '--right');
     node.querySelector('.msg__author').textContent = m.speaker;
-    node.querySelector('.msg__bubble').textContent = m.text;
+    node.querySelector('.msg__bubble').innerHTML = markdownToHtml(m.text);
     chatEl.appendChild(node);
   });
   
@@ -230,6 +250,90 @@ function initializeModal() {
     customPromptModal.classList.add('hidden');
   }
 }
+
+// Voice recognition functionality
+let recognition;
+let isListening = false;
+
+function initVoiceRecognition() {
+  if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = navigator.language;
+    
+    recognition.onresult = function(event) {
+      const transcript = event.results[0][0].transcript;
+      const targetId = recognition.targetId;
+      const textarea = document.getElementById(targetId);
+      if (textarea) {
+        let str = transcript;
+        let modStr = str[0].toUpperCase() + str.slice(1);
+        textarea.value = modStr;
+      }
+      stopListening();
+    };
+    
+    recognition.onerror = function(event) {
+      console.error('Speech recognition error:', event.error);
+      stopListening();
+    };
+    
+    recognition.onend = function() {
+      stopListening();
+    };
+  }
+}
+
+function startListening(targetId) {
+  if (!recognition) {
+    alert('Voice recognition not supported in this browser');
+    return;
+  }
+  
+  if (isListening) {
+    stopListening();
+    return;
+  }
+  
+  recognition.targetId = targetId;
+  recognition.start();
+  isListening = true;
+  
+  // Update button appearance
+  const btn = document.querySelector(`[data-target="${targetId}"]`);
+  if (btn) {
+    btn.textContent = '🔴';
+    btn.classList.add('listening');
+  }
+}
+
+function stopListening() {
+  if (recognition && isListening) {
+    recognition.stop();
+  }
+  isListening = false;
+  
+  // Reset all voice buttons
+  document.querySelectorAll('.voice-btn').forEach(btn => {
+    btn.textContent = '🎤';
+    btn.classList.remove('listening');
+  });
+}
+
+
+// Add event listeners for voice buttons
+document.addEventListener('DOMContentLoaded', function() {
+  initVoiceRecognition();
+  
+  document.querySelectorAll('.voice-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const targetId = this.getAttribute('data-target');
+      startListening(targetId);
+    });
+  });
+});
 
 // Initialize everything
 initializeModal();

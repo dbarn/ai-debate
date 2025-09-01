@@ -24,11 +24,17 @@
     <div class="header-row">
       <div class="field">
         <label>Starting Topic</label>
-        <textarea id="topic">Give me a few ideas on what mountains to climb near Milan?</textarea>
+        <div class="input-with-voice">
+          <textarea id="topic">Give me a few ideas on some interesting projects to run in the Hotel Booking space?</textarea>
+          <button type="button" class="voice-btn" data-target="topic">🎤</button>
+        </div>
       </div>
       <div class="field">
         <label>Extra Prompt Modifier</label>
-        <textarea id="extraPrompt">Limit the response length to 90 words, try to answer any question an be creative and innovative</textarea>
+        <div class="input-with-voice">
+          <textarea id="extraPrompt">Limit the response length to 90 words, try to answer any questions and be creative and innovative</textarea>
+          <button type="button" class="voice-btn" data-target="extraPrompt">🎤</button>
+        </div>
       </div>
     </div>
     <div class="actions">
@@ -57,7 +63,10 @@
     <div class="modal-body">
       <div class="field">
         <label>Your custom prompt:</label>
-        <textarea id="customPromptTextarea" rows="6" placeholder="Write your custom prompt here..."></textarea>
+        <div class="input-with-voice">
+          <textarea id="customPromptTextarea" rows="6" placeholder="Write your custom prompt here..."></textarea>
+          <button type="button" class="voice-btn" data-target="customPromptTextarea">🎤</button>
+        </div>
       </div>
       <div class="modal-actions">
         <button id="prefillLastResponseBtn">Prefill Last AI Response</button>
